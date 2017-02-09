@@ -1,0 +1,56 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BloodSugarTracker"
+        xmlns:bloodsugarDataTableAdapters="clr-namespace:BloodSugarTracker.bloodsugarDataTableAdapters" x:Class="BloodSugarTracker.MainWindow"
+        mc:Ignorable="d"
+        Title="BloodSugarRecord" Height="350" Width="525">
+	<Grid Background="#FF2D2D30">
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Grid.DataContext>
+			<bloodsugarDataTableAdapters:readingsTableAdapter/>
+		</Grid.DataContext>
+		<ProgressBar x:Name="ProgressBar" Grid.Row="3" Grid.ColumnSpan="2" Margin="6" IsIndeterminate="True" Foreground="#FF9C01AC" Visibility="Visible" />
+		<ComboBox x:Name="Options" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Visibility="Hidden" SelectedIndex="0" Margin="8" FontSize="36" >
+			<ListBoxItem Content="Enter Reading" MouseUp="ListBoxItem_Selected_Reading"/>
+			<ListBoxItem Content="Review Readings" MouseUp="ListBoxItem_Selected_Review"/>
+			<ListBoxItem Content="Create Daily Graph" MouseUp="ListBoxItem_Selected_GraphDaily"/>
+			<ListBoxItem Content="Create Average Daily Graph" MouseUp="ListBoxItem_Selected_GraphAverage"/>
+		</ComboBox>
+		<TextBox x:Name="ReadingValue" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="5" FontWeight="Bold" MaxLength="4" FontSize="48" Width="100" Visibility="Hidden"/>
+
+		<ListView x:Name="ResultList" Grid.Row="2" Grid.RowSpan="6" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Hidden" Margin="5">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<WrapPanel>
+						<TextBlock Text="Reading: " />
+						<TextBlock Text="{Binding ReadingString}" FontWeight="Bold" />
+						<TextBlock Text="    " />
+						<TextBlock Text="Date: " />
+						<TextBlock Text="{Binding Timestamp}" FontWeight="Bold" />
+					</WrapPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+		<!-- To add WPF Toolkit or similar to plot graphs based on Readings - use LINQ or a separate SQL query to get date specific data-->
+
+		<Rectangle x:Name="Background" Grid.Row="2" Grid.RowSpan="6" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Hidden" Fill="White" Margin="5"/>
+		<Button x:Name="SubmitButton" Grid.Row="6" Grid.RowSpan="2" Grid.ColumnSpan="2" Content="OK" Margin="5" Click="OKButton_Click" FontSize="36" Visibility="Hidden"/>
+	</Grid>
+</Window>
